@@ -153,8 +153,7 @@ const addExerciseToUserId = (userId, exercise) =>
   });
 
 const addUser = (username) =>
-  User(username)
-    .then((user) => user.save())
+  new User({username: username}).save()
     .catch((err) => {
       if (err.index === 0 && err.keyPattern.username)
         throw "There is already a user with that username";
