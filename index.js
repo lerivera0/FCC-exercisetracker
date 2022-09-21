@@ -64,7 +64,13 @@ app.post("/api/users/:_id/exercises", (req, res) => {
   if (req.body.date != "") newExercise.date = req.body.date;
 
   addExerciseToUserId(req.params._id, newExercise)
-    .then((doc) => res.json(doc))
+    .then((doc) => res.json({
+      _id: doc._id,
+      username: doc.username,
+      description: doc.exercises[doc.exercises.length -1].description,
+      duration: doc.exercises[doc.exercises.length -1].duration,
+      date: new Date(doc.exercises[doc.exercises.length -1].date).toDateString()
+    }))
     .catch((err) => res.json({ error: err }));
 });
 
